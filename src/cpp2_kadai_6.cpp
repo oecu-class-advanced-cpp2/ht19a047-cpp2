@@ -1,23 +1,23 @@
 //cpp2_kadai_6
 #include <iostream>
-#define CPP2_PRIME_UPPER_LIMIT 1000000 //’Tõ‚·‚é’l‚ÌãŒÀ’lB
+#define CPP2_PRIME_UPPER_LIMIT 1000000 //ï¿½Tï¿½ï¿½ï¿½ï¿½ï¿½ï¿½lï¿½Ìï¿½ï¿½ï¿½lï¿½B
 using namespace std;
 /* --------------------------------------------------------------- */
 /*
 * nth_prime
 *
-* —^‚¦‚ç‚ê‚½³®” a ‚Æ d ‚Æ n ‚É‘Î‚µ‚ÄA‚±‚Ì“™·”—ñ‚ÉŠÜ‚Ü‚ê‚é n ”Ô–Ú‚Ì
-* ‘f”‚ğ•Ô‚·B
+* ï¿½^ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ a ï¿½ï¿½ d ï¿½ï¿½ n ï¿½É‘Î‚ï¿½ï¿½ÄAï¿½ï¿½ï¿½Ì“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÉŠÜ‚Ü‚ï¿½ï¿½ n ï¿½Ô–Ú‚ï¿½
+* ï¿½fï¿½ï¿½ï¿½ï¿½Ô‚ï¿½ï¿½B
 *
-* TODO: ‚±‚Ì nth_prime ŠÖ”‚ğÀ‘•‚¹‚æB•K—v‚Å‚ ‚ê‚Î‘¼‚ÉŠÖ”‚â
-* ƒtƒ@ƒCƒ‹‚ğì¬‚¹‚æB
+* TODO: ï¿½ï¿½ï¿½ï¿½ nth_prime ï¿½Öï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Bï¿½Kï¿½vï¿½Å‚ï¿½ï¿½ï¿½Î‘ï¿½ï¿½ÉŠÖï¿½ï¿½ï¿½
+* ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ì¬ï¿½ï¿½ï¿½ï¿½B
 */
 /* -------------------------------------------------------------- */
 int nth_prime(unsigned int a, unsigned int d, unsigned int n);
 bool Prime_number(int x);
 
 int main() {
-	//‘f””»’èƒ`ƒFƒbƒN
+	//ï¿½fï¿½ï¿½ï¿½ï¿½ï¿½ï¿½`ï¿½Fï¿½bï¿½N
 	/*if (Prime_number(92809) == true)cout << "ok" << endl;
 	else cout << "NG" << endl;
 	cin.get();*/
@@ -26,28 +26,27 @@ int main() {
 	std::cout << nth_prime(179,10,203) << std::endl;
 	std::cout << nth_prime(271,37,39) << std::endl;
 
-	// ˆÈ‰ºA“¯—l‚ÉA“üo—Í—á’Ê‚è‚É‚È‚é‚©Šm”F‚¹‚æB
-	cin.get();
+	// ï¿½È‰ï¿½ï¿½Aï¿½ï¿½ï¿½lï¿½ÉAï¿½ï¿½ï¿½oï¿½Í—ï¿½Ê‚ï¿½É‚È‚é‚©ï¿½mï¿½Fï¿½ï¿½ï¿½ï¿½B
 	return 0;
 }
 
 int nth_prime(unsigned int a, unsigned int d, unsigned int n) {
-	int First_term = a; //‰€
-	int tolerance = d; //Œö·
-	int Purpose = n; //–Ú“I
+	int First_term = a; //ï¿½ï¿½ï¿½ï¿½
+	int tolerance = d; //ï¿½ï¿½ï¿½ï¿½
+	int Purpose = n; //ï¿½Ú“I
 
-	int now = First_term;//Œ»İ€
-	int count = 0;//‘f”‚Ì”
+	int now = First_term;//ï¿½ï¿½ï¿½İï¿½
+	int count = 0;//ï¿½fï¿½ï¿½ï¿½Ìï¿½
 
 	while (true) {
-		if (Prime_number(now) == true)count++;//‘f”‚È‚çƒJƒEƒ“ƒg+1
-		if (count == n) break;//–Ú“I‚Ì‘f”‚É’B‚µ‚½‚ç”²‚¯
-		now += tolerance;//Œö·‚Ì‰ÁZ
+		if (Prime_number(now) == true)count++;//ï¿½fï¿½ï¿½ï¿½È‚ï¿½Jï¿½Eï¿½ï¿½ï¿½g+1
+		if (count == n) break;//ï¿½Ú“Iï¿½Ì‘fï¿½ï¿½ï¿½É’Bï¿½ï¿½ï¿½ï¿½ï¿½ç”²ï¿½ï¿½
+		now += tolerance;//ï¿½ï¿½ï¿½ï¿½ï¿½Ì‰ï¿½ï¿½Z
 	}
 	return now;
 }
 
-//‘f””»’è
+//ï¿½fï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 bool Prime_number(int x) {
 	for (int i = 2; x > i; i++) {
 		if ((x%i) == 0) return false;
