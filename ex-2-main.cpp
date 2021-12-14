@@ -6,7 +6,7 @@ namespace cpp2 {
 	/* --------------------------------------------------------------------- */
 	/*
 	mcxi
-	mcxi ‹L–@‚ğ‰ğÍ‚·‚éƒNƒ‰ƒX‚Å‚·B
+	mcxi è¨˜æ³•ã‚’è§£æã™ã‚‹ã‚¯ãƒ©ã‚¹ã§ã™ã€‚
 	*/
 	/* --------------------------------------------------------------------- */
 	class mcxi {
@@ -16,46 +16,46 @@ namespace cpp2 {
 			decimal = 0;
 		}
 		mcxi(std::string str) {
-			//•¶š—ñ—áŠOˆ—
-			//code¨
+			//æ–‡å­—åˆ—ä¾‹å¤–å‡¦ç†
+			//codeâ†’
 
 			decimal = 0;
-			//m‚ª‘¶İ‚µ‚È‚¢
+			//mãŒå­˜åœ¨ã—ãªã„
 			if (str.find('m') == -1){}
-			//m‚ªæ“ª‚È‚ç1000
+			//mãŒå…ˆé ­ãªã‚‰1000
 			else if (str.find('m') == 0) { decimal += 1000; }
-			//m‚Ìˆê‚Â‘O‚Ì”š*1000
+			//mã®ä¸€ã¤å‰ã®æ•°å­—*1000
 			else { decimal += int(str[str.find('m') - 1] - '0') * 1000; }
 
-			//c‚ª‘¶İ‚µ‚È‚¢
+			//cãŒå­˜åœ¨ã—ãªã„
 			if (str.find('c') == -1) {}
-			//c‚ªæ“ª‚È‚ç100
+			//cãŒå…ˆé ­ãªã‚‰100
 			else if (str.find('c') == 0) { decimal += 100; }
-			//c‚Ì‘O‚ªm‚È‚ç100
+			//cã®å‰ãŒmãªã‚‰100
 			else if (str[str.find('c') - 1] == 'm') { decimal += 100; }
-			//c‚Ìˆê‚Â‘O‚Ì”š*100
+			//cã®ä¸€ã¤å‰ã®æ•°å­—*100
 			else { decimal += int(str[str.find('c') - 1] - '0') * 100; }
 
-			//x‚ª‘¶İ‚µ‚È‚¢
+			//xãŒå­˜åœ¨ã—ãªã„
 			if (str.find('x') == -1) {}
-			//x‚ªæ“ª‚È‚ç10
+			//xãŒå…ˆé ­ãªã‚‰10
 			else if (str.find('x') == 0) { decimal += 10; }
-			//x‚Ì‘O‚ªm‚©c‚È‚ç10
+			//xã®å‰ãŒmã‹cãªã‚‰10
 			else if (str[str.find('x') - 1] == 'm'|| str[str.find('x') - 1] == 'c') { decimal += 10; }
-			//x‚Ìˆê‚Â‘O‚Ì”š*10
+			//xã®ä¸€ã¤å‰ã®æ•°å­—*10
 			else { decimal += int(str[str.find('x') - 1] - '0') * 10; }
 
-			//i‚ª‘¶İ‚µ‚È‚¢
+			//iãŒå­˜åœ¨ã—ãªã„
 			if (str.find('i') == -1) {}
-			//i‚ªæ“ª‚È‚ç1
+			//iãŒå…ˆé ­ãªã‚‰1
 			else if (str.find('i') == 0) { decimal += 1; }
-			//i‚Ì‘O‚ªm‚©c‚©x‚È‚ç1
+			//iã®å‰ãŒmã‹cã‹xãªã‚‰1
 			else if (str[str.find('i') - 1] == 'm' || str[str.find('i') - 1] == 'c' || str[str.find('i') - 1] == 'x') { decimal += 1; }
-			//i‚Ìˆê‚Â‘O‚Ì”š*1
+			//iã®ä¸€ã¤å‰ã®æ•°å­—*1
 			else { decimal += int(str[str.find('i') - 1] - '0') * 1; }
 		}
 
-		//+‹L†‚ğƒI[ƒo[ƒ[ƒh
+		//+è¨˜å·ã‚’ã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰
 		mcxi operator +(mcxi r)
 		{
 			mcxi tc;
@@ -63,7 +63,7 @@ namespace cpp2 {
 			return tc;
 		}
 
-		//int¨•¶š—ñ•ÏŠ·
+		//intâ†’æ–‡å­—åˆ—å¤‰æ›
 		std::string to_string() {
 			return std::to_string(decimal);
 		}
