@@ -19,7 +19,10 @@ namespace cpp2 {
 			//文字列例外処理
 			//code→
 
+			//10進数表記
 			decimal = 0;
+
+			//m処理
 			//mが存在しない
 			if (str.find('m') == -1){}
 			//mが先頭なら1000
@@ -27,6 +30,7 @@ namespace cpp2 {
 			//mの一つ前の数字*1000
 			else { decimal += int(str[str.find('m') - 1] - '0') * 1000; }
 
+			//c処理
 			//cが存在しない
 			if (str.find('c') == -1) {}
 			//cが先頭なら100
@@ -36,6 +40,7 @@ namespace cpp2 {
 			//cの一つ前の数字*100
 			else { decimal += int(str[str.find('c') - 1] - '0') * 100; }
 
+			//x処理
 			//xが存在しない
 			if (str.find('x') == -1) {}
 			//xが先頭なら10
@@ -45,6 +50,7 @@ namespace cpp2 {
 			//xの一つ前の数字*10
 			else { decimal += int(str[str.find('x') - 1] - '0') * 10; }
 
+			//i処理
 			//iが存在しない
 			if (str.find('i') == -1) {}
 			//iが先頭なら1
@@ -112,5 +118,6 @@ int main() {
 	cpp2::mcxi result9 = a9 + b9;
 	std::cout << "9m9c9x9i" << " " << result9.to_string() << std::endl;
 
-	std::cin.get();
+	//テスト用
+	//std::cin.get();
 }
