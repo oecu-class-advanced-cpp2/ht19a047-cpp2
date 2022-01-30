@@ -1,129 +1,218 @@
-//MCXI.cpp
-#include <iostream>
+﻿#include <iostream>
 #include <string>
 
 namespace cpp2 {
 	/* --------------------------------------------------------------------- */
 	/*
 	mcxi
+
 	mcxi 記法を解析するクラスです。
 	*/
 	/* --------------------------------------------------------------------- */
 	class mcxi {
-		//10進数
-		int decimal;
 	public:
-		//コンストラクタ
-		//引数なし
-		mcxi() {
-			decimal = 0;
+		/* ----------------------------------------------------------------- */
+		/*
+		mcxi
+
+		指定された文字列を解析して、オブジェクトを初期化します。
+		以下の場合には例外が創出されます。
+
+		1. [2-9,m,c,x,i] 以外の文字が出現した場合
+		2. 2 文字続けて数字 (2-9) が出現した場合
+		3. m, c, x, i がこの順序で出現しなかった場合
+		ただし、例えば mx のように、特定の文字をスキップする事は許容
+		されます。
+		*/
+		/* ----------------------------------------------------------------- */
+		mcxi(const std::string& s) : value_(0) {
+			int num = 1;
+			for (auto pos = s.begin(); pos != s.end(); ++pos) {
+				/*memo
+					std::cout << int('m') << std::endl; 109
+					std::cout << int('c') << std::endl; 99
+					std::cout << int('x') << std::endl; 120
+					std::cout << int('i') << std::endl; 105
+					std::cout << int('2') << std::endl; 50
+					std::cout << int('9') << std::endl; 57
+				*/
+				if (int(*pos) >= 50 && 57 >= int(*pos)) {
+					//2-9
+					if (num > 1) {
+						//2.例外処理 数字連続
+						std::cout <<*pos<< ":mcxi記法では数字は連続しません" << std::endl;
+					}
+					else {
+						num = int(*pos) - 48;
+					}
+				}
+				else {
+					//mcxi
+					switch (int(*pos)){
+					//条件分岐＆3.例外処理 順序違反
+					case 109:
+						if (value_ == 0) {
+							num *= 1000;
+							value_ += num;
+							num = 1;
+						}
+						else{
+							std::cout <<":mcxi記法の英字はmcxiの順に記載します" << std::endl;
+						}
+						break;//m
+					case 99:
+						if (value_ % 1000 == 0) {
+							num *= 100;
+							value_ += num;
+							num = 1;
+						}
+						else {
+							std::cout << ":mcxi記法の英字はmcxiの順に記載します" << std::endl;
+						}
+						break;//c
+					case 120:
+						if (value_ % 100 == 0) {
+							num *= 10;
+							value_ += num;
+							num = 1;
+						}
+						else {
+							std::cout << ":mcxi記法の英字はmcxiの順に記載します" << std::endl;
+						}
+						break;//x
+					case 105:
+						if (value_ % 10 == 0) {
+							num *= 1;
+							value_ += num;
+							num = 1;
+						}
+						else {
+							std::cout << ":mcxi記法の英字はmcxiの順に記載します" << std::endl;
+						}
+						break;//i
+					//1.例外処理 文字違反
+					default:
+						std::cout<<*pos<<":mcxi記法に "<<*pos<<" は含まれません"<<std::endl;
+					}
+				}
+			}
 		}
-		//引数あり
-		mcxi(std::string str) {
-			//文字列例外処理
-			//code→
-			//例外条件判定
-			//処理
 
-			//10進数
-			decimal = 0;
 
-			//m処理
-			//mが存在しない
-			if (str.find('m') == -1){}
-			//mが先頭なら1000
-			else if (str.find('m') == 0) { decimal += 1000; }
-			//mの一つ前の数字*1000
-			else { decimal += int(str[str.find('m') - 1] - '0') * 1000; }
+		/* ----------------------------------------------------------------- */
+		/*
+		operator+
 
-			//c処理
-			//cが存在しない
-			if (str.find('c') == -1) {}
-			//cが先頭なら100
-			else if (str.find('c') == 0) { decimal += 100; }
-			//cの前がmなら100
-			else if (str[str.find('c') - 1] == 'm') { decimal += 100; }
-			//cの一つ前の数字*100
-			else { decimal += int(str[str.find('c') - 1] - '0') * 100; }
-
-			//x処理
-			//xが存在しない
-			if (str.find('x') == -1) {}
-			//xが先頭なら10
-			else if (str.find('x') == 0) { decimal += 10; }
-			//xの前がmかcなら10
-			else if (str[str.find('x') - 1] == 'm'|| str[str.find('x') - 1] == 'c') { decimal += 10; }
-			//xの一つ前の数字*10
-			else { decimal += int(str[str.find('x') - 1] - '0') * 10; }
-
-			//i処理
-			//iが存在しない
-			if (str.find('i') == -1) {}
-			//iが先頭なら1
-			else if (str.find('i') == 0) { decimal += 1; }
-			//iの前がmかcかxなら1
-			else if (str[str.find('i') - 1] == 'm' || str[str.find('i') - 1] == 'c' || str[str.find('i') - 1] == 'x') { decimal += 1; }
-			//iの一つ前の数字*1
-			else { decimal += int(str[str.find('i') - 1] - '0') * 1; }
-		}
-
+		2 つのオブジェクトの加算結果を取得します。
+		*/
+		/* ----------------------------------------------------------------- */
 		//+記号をオーバーロード
-		mcxi operator +(mcxi r)
-		{
-			mcxi tc;
-			tc.decimal = this->decimal + r.decimal;
+		mcxi operator+(const mcxi& rhs) {
+			mcxi tc("");
+			tc.value_ = this->value_ + rhs.value_;
 			return tc;
 		}
 
-		//int→文字列変換
-		std::string to_string() {
-			return std::to_string(decimal);
-		}
-	};
+		/* ----------------------------------------------------------------- */
+		/*
+		to_string
 
-} // namespace cpp2
+		現在の値を mcxi 記法に変換します。
+		*/
+		/* ----------------------------------------------------------------- */
+		std::string to_string() const {
+			std::string str;
+			if (value_ / 1000 >= 2) {
+				str += (value_ / 1000)+48;
+			}
+			if (value_ / 1000 >= 1) {
+				str += 'm';
+			}
+			if ((value_ % 1000) / 100 >= 2) {
+				str += ((value_ % 1000) / 100) + 48;
+			}
+			if ((value_ % 1000) / 100 >= 1) {
+				str += 'c';
+			}
+			if ((value_ % 100) / 10 >= 2) {
+				str += ((value_ % 100) / 10) + 48;
+			}
+			if ((value_ % 100) / 10 >= 1) {
+				str += 'x';
+			}
+			if ((value_ % 10) >= 2) {
+				str += (value_ % 10) + 48;
+			}
+			if ((value_ % 10) >= 1) {
+				str += 'i';
+			}
+			return str;
+		}
+
+		void debug_mcxi() {
+			std::cout << "value_: " << value_ << std::endl;
+		}
+
+
+	private:
+		int value_;
+	};
+}
+
 int main() {
+
 	cpp2::mcxi a0("xi");
+	a0.debug_mcxi();
 	cpp2::mcxi b0("x9i");
-	cpp2::mcxi result0 = a0 + b0;
+	auto result0 = a0 + b0;
 	std::cout << "3x" << " " << result0.to_string() << std::endl;
+
+	std::cin.get();
+
+	/*
 	cpp2::mcxi a1("i");
 	cpp2::mcxi b1("9i");
-	cpp2::mcxi result1 = a1 + b1;
+	auto result1 = a1 + b1;
 	std::cout << "x" << " " << result1.to_string() << std::endl;
+
 	cpp2::mcxi a2("c2x2i");
 	cpp2::mcxi b2("4c8x8i");
-	cpp2::mcxi result2 = a2 + b2;
+	auto result2 = a2 + b2;
 	std::cout << "6cx" << " " << result2.to_string() << std::endl;
+
 	cpp2::mcxi a3("m2ci");
 	cpp2::mcxi b3("4m7c9x8i");
-	cpp2::mcxi result3 = a3 + b3;
+	auto result3 = a3 + b3;
 	std::cout << "5m9c9x9i" << " " << result3.to_string() << std::endl;
+
 	cpp2::mcxi a4("9c9x9i");
 	cpp2::mcxi b4("i");
-	cpp2::mcxi result4 = a4 + b4;
+	auto result4 = a4 + b4;
 	std::cout << "m" << " " << result4.to_string() << std::endl;
+
 	cpp2::mcxi a5("i");
 	cpp2::mcxi b5("9m9c9x8i");
-	cpp2::mcxi result5 = a5 + b5;
+	auto result5 = a5 + b5;
 	std::cout << "9m9c9x9i" << " " << result5.to_string() << std::endl;
+
 	cpp2::mcxi a6("m");
 	cpp2::mcxi b6("i");
-	cpp2::mcxi result6 = a6 + b6;
+	auto result6 = a6 + b6;
 	std::cout << "mi" << " " << result6.to_string() << std::endl;
+
 	cpp2::mcxi a7("i");
 	cpp2::mcxi b7("m");
-	cpp2::mcxi result7 = a7 + b7;
+	auto result7 = a7 + b7;
 	std::cout << "mi" << " " << result7.to_string() << std::endl;
+
 	cpp2::mcxi a8("m9i");
 	cpp2::mcxi b8("i");
-	cpp2::mcxi result8 = a8 + b8;
+	auto result8 = a8 + b8;
 	std::cout << "mx" << " " << result8.to_string() << std::endl;
+
 	cpp2::mcxi a9("9m8c7xi");
 	cpp2::mcxi b9("c2x8i");
-	cpp2::mcxi result9 = a9 + b9;
+	auto result9 = a9 + b9;
 	std::cout << "9m9c9x9i" << " " << result9.to_string() << std::endl;
-
-	//テスト用
-	//std::cin.get();
+	*/
 }
