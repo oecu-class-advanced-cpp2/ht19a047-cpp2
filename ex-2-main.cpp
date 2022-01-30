@@ -167,8 +167,6 @@ int main() {
 	auto result0 = a0 + b0;
 	std::cout << "3x" << " " << result0.to_string() << std::endl;
 
-	std::cin.get();
-
 	/*
 	cpp2::mcxi a1("i");
 	cpp2::mcxi b1("9i");
